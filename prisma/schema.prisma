@@ -10,7 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id   String @id @default(uuid())
-  name String
+model Driver {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String
+  car         String
+  rating      Float
+  comment     String
+  ratePerKm   Float
+  minDistance Int
 }

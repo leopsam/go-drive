@@ -1,12 +1,13 @@
-import { Router } from "express";
-import { calculateRouteAndListDrivers } from "../controllers/ride-controller";
+import { Router } from 'express';
+import { handleCalculateRouteAndDrivers } from '../controllers/ride-controller';
+import { validateSchema } from '../middleware/validateSchema';
+import { estimateBodySchema } from '../schema/estimateBodySchema';
 
 const rideRoutes = Router();
 
 rideRoutes
-  .post("/estimate", calculateRouteAndListDrivers)
-  .patch("/confirm", calculateRouteAndListDrivers)
-  .get("/:id?/:driver_id", calculateRouteAndListDrivers)
-  .get("/teste", calculateRouteAndListDrivers) //retirar depois
+    .post('/estimate', validateSchema(estimateBodySchema), handleCalculateRouteAndDrivers)
+    .patch('/confirm', handleCalculateRouteAndDrivers)
+    .get('/:id?/:driver_id', handleCalculateRouteAndDrivers);
 
 export { rideRoutes };
