@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
 
 async function main() {
     const homer = await prisma.driver.upsert({
@@ -15,7 +15,7 @@ async function main() {
             ratePerKm: 2.5,
             minDistance: 1,
         },
-    });
+    })
 
     const dominic = await prisma.driver.upsert({
         where: { name: 'Dominic Toretto' },
@@ -29,7 +29,7 @@ async function main() {
             ratePerKm: 5.0,
             minDistance: 5,
         },
-    });
+    })
 
     const james = await prisma.driver.upsert({
         where: { name: 'James Bond' },
@@ -44,17 +44,17 @@ async function main() {
             ratePerKm: 10.0,
             minDistance: 10,
         },
-    });
+    })
 
-    console.log('Seed completed successfully!', { homer, dominic, james });
+    console.log('Seed completed successfully!', { homer, dominic, james })
 }
 
 main()
     .then(async () => {
-        await prisma.$disconnect();
+        await prisma.$disconnect()
     })
     .catch(async e => {
-        console.error(e);
-        await prisma.$disconnect();
-        process.exit(1);
-    });
+        console.error(e)
+        await prisma.$disconnect()
+        process.exit(1)
+    })
