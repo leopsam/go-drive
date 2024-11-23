@@ -7,7 +7,7 @@ async function calculateRouteAndListDrivers(origin: string, destination: string,
     if (origin === destination) {
         throw {
             error_code: 'INVALID_DATA',
-            error_description: 'Os dados fornecidos no corpo da requisição são inválidos.',
+            error_description: 'Os dados fornecidos no corpo da requisição são inválidos',
         }
     }
 
@@ -103,7 +103,7 @@ async function confirmTripAndSaveToHistory(
         },
     })
 
-    if (!driverResult) {
+    if (!driverResult || driverResult?.name !== driver.name) {
         throw {
             error_code: 'DRIVER_NOT_FOUND',
             error_description: 'Motorista não encontrado',
@@ -112,7 +112,7 @@ async function confirmTripAndSaveToHistory(
 
     const minDistanceDriver = driverResult.minDistance * 1000
 
-    if (minDistanceDriver <= distance) {
+    if (minDistanceDriver > distance) {
         throw {
             error_code: 'INVALID_DISTANCE',
             error_description: 'Quilometragem inválida para o motorista',
