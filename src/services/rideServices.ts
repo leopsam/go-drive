@@ -132,7 +132,66 @@ async function confirmTripAndSaveToHistory(
     })
 }
 
+async function listUserTrips(customer_id: string, driver_id: string): Promise<object> {
+    if (driver_id) {
+        const driverResult = await prisma.driver.findUnique({
+            where: {
+                id: Number(driver_id),
+            },
+        })
+
+        if (!driverResult) {
+            throw {
+                error_code: 'INVALID_DRIVER',
+                error_description: 'Motorista invalido',
+            }
+        }
+    }
+
+    const whereCondition = !driver_id ? { customer_id } : { customer_id, driver_id: Number(driver_id) }
+
+    const rides = await prisma.ride.findMany({
+        where: whereCondition,
+        include: {
+            driver: {
+                select: {
+                    id: true,
+                    name: true,
+                },
+            },
+        },
+        orderBy: {
+            createdAt: 'desc',
+        },
+    })
+
+    if (!rides.length) {
+        throw {
+            error_code: 'NO_RIDES_FOUND',
+            error_description: 'Nenhum registro encontrado',
+        }
+    }
+
+    return {
+        customer_id,
+        rides: rides.map(ride => ({
+            id: ride.id,
+            date: ride.createdAt,
+            origin: ride.origin,
+            destination: ride.destination,
+            distance: ride.distance,
+            duration: ride.duration,
+            driver: {
+                id: ride.driver.id,
+                name: ride.driver.name,
+            },
+            value: ride.value,
+        })),
+    }
+}
+
 export default {
     calculateRouteAndListDrivers,
     confirmTripAndSaveToHistory,
+    listUserTrips,
 }
