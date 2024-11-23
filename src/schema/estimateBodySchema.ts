@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { EstimateBody } from '../types/rideType'
+import type { EstimateBody } from '../types/rideType'
 
 export const estimateBodySchema = Joi.object<EstimateBody>({
     origin: Joi.string().trim().required(),

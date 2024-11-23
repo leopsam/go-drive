@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express'
-import Joi from 'joi'
+import type { Request, Response, NextFunction } from 'express'
+import type Joi from 'joi'
 
 export function validateSchema(schema: Joi.ObjectSchema) {
     return (req: Request, res: Response, next: NextFunction): void => {
@@ -10,6 +10,7 @@ export function validateSchema(schema: Joi.ObjectSchema) {
                 error_code: 'INVALID_DATA',
                 error_description: 'Os dados fornecidos no corpo da requisição são inválidos.',
             })
+
             return
         }
 

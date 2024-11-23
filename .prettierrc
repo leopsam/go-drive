@@ -6,7 +6,5 @@
     "tabWidth": 4,
     "arrowParens": "avoid",
     "bracketSpacing": true,
-    "plugins": [
-        "prettier-plugin-prisma"
-    ]
+    "plugins": ["prettier-plugin-prisma"]
 }

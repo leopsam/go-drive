@@ -1,6 +1,6 @@
-import { Request, Response } from 'express'
+import type { Request, Response } from 'express'
 import rideServices from '../services/rideServices'
-import { EstimateBody, Ride } from '../types/rideType'
+import type { EstimateBody, Ride } from '../types/rideType'
 
 export async function handleCalculateRouteAndDrivers(req: Request, res: Response): Promise<void> {
     try {

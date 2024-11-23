@@ -1,8 +1,9 @@
 import { prisma } from '../config/database'
 import axios from 'axios'
-import { DriverBody } from '../types/rideType'
+import type { DriverBody } from '../types/rideType'
 
-async function calculateRouteAndListDrivers(origin: string, destination: string, customer_id: string): Promise<object> {
+// eslint-disable-next-line no-unused-vars
+async function calculateRouteAndListDrivers(origin: string, destination: string, _customer_id: string): Promise<object> {
     if (origin === destination) {
         throw {
             error_code: 'INVALID_DATA',

@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { Ride } from '../types/rideType'
+import type { Ride } from '../types/rideType'
 
 export const confirmBodySchema = Joi.object<Ride>({
     customer_id: Joi.string().required(),

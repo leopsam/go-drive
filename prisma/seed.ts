@@ -46,6 +46,7 @@ async function main() {
         },
     })
 
+    // eslint-disable-next-line no-console
     console.log('Seed completed successfully!', { homer, dominic, james })
 }
 
@@ -54,6 +55,7 @@ main()
         await prisma.$disconnect()
     })
     .catch(async e => {
+        // eslint-disable-next-line no-console
         console.error(e)
         await prisma.$disconnect()
         process.exit(1)
