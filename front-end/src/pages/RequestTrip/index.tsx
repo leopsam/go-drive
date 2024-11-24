@@ -1,11 +1,30 @@
+import postRideEstimate from '../../services/api'
 import { Container, Info, Form, InputItem, ButtonForm, TitleContainer, ButtonHistory } from './styles'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 
 export default function Home() {
     const [customerId, setCustomerId] = useState('')
     const [origin, setOrigin] = useState('')
     const [destination, setDestination] = useState('')
+    const [textButton, setTextButton] = useState('ESTIMAR VALOR DA VIAGEM')
+    const navigation = useNavigate()
 
+    function submitTripRequest(e: any) {
+        e.preventDefault()
+        setTextButton('Carregando...')
+
+        postRideEstimate(customerId, origin, destination)
+            .then(data => {
+                setTextButton('ESTIMAR VALOR DA VIAGEM')
+                navigation('/')
+            })
+            .catch((err: any) => {
+                setTextButton('ESTIMAR VALOR DA VIAGEM')
+                console.log(err)
+            })
+    }
     return (
         <Container>
             <Info>
@@ -24,7 +43,7 @@ export default function Home() {
                 </p>
                 <ButtonHistory>HISTÓRICO DE VIAGENS</ButtonHistory>
             </Info>
-            <Form>
+            <Form onSubmit={submitTripRequest}>
                 <TitleContainer>Go Drive</TitleContainer>
                 <InputItem>
                     <label htmlFor="customerId">Usuário:</label>
@@ -38,7 +57,8 @@ export default function Home() {
                     <label htmlFor="destination">Destino:</label>
                     <input id="destination" value={destination} onChange={e => setDestination(e.target.value)} placeholder="Informe o endereço de destino" />
                 </InputItem>
-                <ButtonForm>ESTIMAR VALOR DA VIAGEM</ButtonForm>
+                <ButtonForm type="submit">{textButton}</ButtonForm>
+                <ToastContainer position="bottom-center" autoClose={3000} hideProgressBar={false} newestOnTop={false} />
             </Form>
         </Container>
     )

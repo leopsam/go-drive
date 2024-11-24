@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import RequestTrip from './pages/RequestTrip'
+import 'react-toastify/dist/ReactToastify.css'
 import './styles/reset.css'
 import './styles/global.css'
 

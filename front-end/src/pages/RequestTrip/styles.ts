@@ -10,7 +10,7 @@ const Container = styled.div`
     font-family: sans-serif;
     gap: 50px;
 `
-const Form = styled.div`
+const Form = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
