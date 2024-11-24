@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
-export default function Home() {
+export default function Page() {
     const [customerId, setCustomerId] = useState('')
     const [origin, setOrigin] = useState('')
     const [destination, setDestination] = useState('')
@@ -18,7 +18,8 @@ export default function Home() {
         postRideEstimate(customerId, origin, destination)
             .then(data => {
                 setTextButton('ESTIMAR VALOR DA VIAGEM')
-                navigation('/')
+                navigation('/confirm', { state: { data } })
+                //navigation('/')
             })
             .catch((err: any) => {
                 setTextButton('ESTIMAR VALOR DA VIAGEM')

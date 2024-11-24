@@ -1,6 +1,9 @@
 import { prisma } from '../config/database'
 import axios from 'axios'
 import type { DriverBody } from '../types/rideType'
+import { config } from 'dotenv'
+
+config({ path: '../.env' })
 
 // eslint-disable-next-line no-unused-vars
 async function calculateRouteAndListDrivers(origin: string, destination: string, _customer_id: string): Promise<object> {

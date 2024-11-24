@@ -5,6 +5,7 @@ import express from 'express'
 import cors from 'cors'
 import { connectDb, disconnectDB } from './config/database'
 import { rideRoutes } from './routers/rideRouter'
+import 'dotenv/config'
 
 const app = express()
 
