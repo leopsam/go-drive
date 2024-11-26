@@ -1,4 +1,4 @@
-import postRideEstimate from '../../services/api'
+import postRideEstimate from '../../services/postRideEstimateApi'
 import { Container, Info, Form, InputItem, ButtonForm, TitleContainer, ButtonHistory } from './styles'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -9,7 +9,7 @@ export default function Page() {
     const [origin, setOrigin] = useState('')
     const [destination, setDestination] = useState('')
     const [textButton, setTextButton] = useState('ESTIMAR VALOR DA VIAGEM')
-    const navigation = useNavigate()
+    const navigate = useNavigate()
 
     function submitTripRequest(e: any) {
         e.preventDefault()
@@ -17,9 +17,10 @@ export default function Page() {
 
         postRideEstimate(customerId, origin, destination)
             .then(data => {
+                localStorage.setItem('rideEstimateData', JSON.stringify(data))
+                localStorage.setItem('rideEstimateBody', JSON.stringify({ customerId, origin, destination }))
                 setTextButton('ESTIMAR VALOR DA VIAGEM')
-                navigation('/confirm', { state: { data } })
-                //navigation('/')
+                navigate('/confirm')
             })
             .catch((err: any) => {
                 setTextButton('ESTIMAR VALOR DA VIAGEM')
@@ -42,7 +43,7 @@ export default function Page() {
                     Em qualquer momento, também será possível consultar o histórico das viagens realizadas, para que você tenha total controle sobre suas
                     viagens passadas.
                 </p>
-                <ButtonHistory>HISTÓRICO DE VIAGENS</ButtonHistory>
+                <ButtonHistory onClick={() => navigate('/history')}>HISTÓRICO DE VIAGENS</ButtonHistory>
             </Info>
             <Form onSubmit={submitTripRequest}>
                 <TitleContainer>Go Drive</TitleContainer>

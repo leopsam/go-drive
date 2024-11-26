@@ -66,7 +66,7 @@ export async function handleListUserTrips(req: Request, res: Response): Promise<
 
         res.status(500).send({
             error_code: 'INTERNAL_ERROR',
-            error_description: err,
+            error_description: 'Ocorreu um erro inesperado.',
         })
     }
 }
