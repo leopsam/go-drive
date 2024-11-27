@@ -24,6 +24,7 @@ services:
       DATABASE_URL: "postgres://postgres:postgres@postgres:5432/go_drive"
     depends_on:
       - postgres
+    command: sh -c "npx jest && npm start"
 
   spa:
     container_name: spa
@@ -46,6 +47,18 @@ services:
       - postgres
       - api
       - spa
+
+  test:
+    container_name: test
+    build: ./back-end
+    command: npx jest
+    environment:
+      DATABASE_URL: "postgres://postgres:postgres@postgres:5432/go_drive"
+    depends_on:
+      - postgres
+    volumes:
+      - .:/src/usr/
+
 
 volumes:
   postgres-data:

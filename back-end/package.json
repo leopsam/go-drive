@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "jest",
+        "test": "npx jest",
         "dev": "tsx watch src/server.ts",
         "build": "tsc",
         "start": "npm run prisma:migrate:deploy && npx prisma db seed && node dist/server.js",
