@@ -1,4 +1,3 @@
-//import { useLocation } from 'react-router-dom'
 import { Container, Info, SmallDynamicSize, LargeDynamicSize, ContainerDrivers, CardDrive, InfoDrive, ButtonSelection } from './styles'
 import { ToastContainer } from 'react-toastify'
 import { useEffect, useState } from 'react'
