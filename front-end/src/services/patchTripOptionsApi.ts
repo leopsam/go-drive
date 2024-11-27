@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 async function patchTripOptions(body: object) {
-    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/ride/';
+    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/ride/'
 
     try {
         const res = await axios.patch(`${API_URL}confirm`, body)

@@ -28,19 +28,13 @@ const ContainerDrivers = styled.form`
     background-color: #00000086;
     padding: 0 30px;
     max-height: 100%;
-    max-height: 100%; /* Garante que o conteúdo não ultrapasse a altura */
+    max-height: 100%;
     overflow: auto;
     @media (max-width: 980px) {
         width: 75vw;
         padding: 15px;
         height: 100%;
     }
-`
-const TitleContainer = styled.h1`
-    font-size: 28px;
-    margin-bottom: 5px;
-    font-weight: bold;
-    text-align: center;
 `
 const CardDrive = styled.div`
     display: flex;
@@ -82,7 +76,7 @@ const InfoDrive = styled.div`
     display: flex;
     flex-direction: column;
 `
-const ButtonHistory = styled.button`
+const ButtonSelection = styled.button`
     background-color: #26ac84;
     margin: 17px 0;
     border: none;
@@ -121,6 +115,10 @@ const Info = styled.div`
 `
 const SmallDynamicSize = styled.div`
     display: none;
+    img{
+        height: 200px;
+        width: 200px;
+    }
     @media (max-width: 980px) {
         display: inline;
     }
@@ -132,4 +130,4 @@ const LargeDynamicSize = styled.div`
     }
 `
 
-export { Container, ContainerDrivers, Info, LargeDynamicSize, SmallDynamicSize, CardDrive, InfoDrive, TitleContainer, ButtonHistory }
+export { Container, Info, SmallDynamicSize, LargeDynamicSize, ContainerDrivers, CardDrive, InfoDrive, ButtonSelection }

@@ -9,7 +9,7 @@ async function postRideEstimate(customerId: string, origin: string, destination:
         destination,
     }
 
-    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/ride/';
+    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/ride/'
 
     try {
         const res = await axios.post(`${API_URL}estimate`, body)

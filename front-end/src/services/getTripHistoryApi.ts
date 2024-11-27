@@ -3,8 +3,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 async function getTripHistory(customerId: string, driverId: string | null) {
-    
-    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/ride/';
+    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/ride/'
 
     try {
         if (!driverId) {

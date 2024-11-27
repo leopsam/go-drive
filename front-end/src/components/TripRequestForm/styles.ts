@@ -1,40 +1,5 @@
 import styled from 'styled-components'
 
-const Container = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding: 0 30px;
-    color: white;
-    font-family: sans-serif;
-    gap: 50px;
-    @media (max-width: 980px) {
-        flex-direction: column-reverse;
-        height: 100%;
-        width: 100%;
-        justify-content: center;
-        padding: 0;
-    }
-`
-const Info = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    width: 30vw;
-    height: 100%;
-    color: white;
-    p {
-        margin: 10px 0;
-        line-height: 20px;
-        font-size: 16px;
-    }
-    @media (max-width: 980px) {
-        width: 75vw;
-        text-align: justify;
-    }
-`
 const Form = styled.form`
     display: flex;
     flex-direction: column;
@@ -94,4 +59,4 @@ const ButtonSubmit = styled.button`
     }
 `
 
-export { Container, Info, Form, InputItem, ButtonSubmit, TitleContainer }
+export { Form, TitleContainer, InputItem, ButtonSubmit }

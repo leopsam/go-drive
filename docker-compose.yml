@@ -20,6 +20,8 @@ services:
       - 8080:8080
     env_file:
       - .env
+    environment:
+      DATABASE_URL: "postgres://postgres:postgres@postgres:5432/go_drive"
     depends_on:
       - postgres
 
@@ -29,7 +31,7 @@ services:
     volumes:
       - react-build:/var/www/html
     environment:
-      - REACT_APP_API_URL=http://api:8080/ride/
+      REACT_APP_API_URL: http://api:8080/ride/
     depends_on:
       - api
 

@@ -1,13 +1,34 @@
 import { prisma } from '../config/database'
 import axios from 'axios'
 import type { DriverBody } from '../types/rideType'
-import { config } from 'dotenv'
-import drivers from '../utils/drivers.json'
 
-config({ path: '../.env' })
+export interface Route {
+    origin: {
+        latitude: number
+        longitude: number
+    }
+    destination: {
+        latitude: number
+        longitude: number
+    }
+    distance: number
+    duration: string
+    options: Array<{
+        id: number
+        name: string
+        description: string
+        vehicle: string
+        review: {
+            rating: number
+            comment: string
+        }
+        value: number
+    }>
+    routeResponse: object
+}
 
 // eslint-disable-next-line no-unused-vars
-async function calculateRouteAndListDrivers(origin: string, destination: string, _customer_id: string): Promise<object> {
+async function calculateRouteAndListDrivers(origin: string, destination: string, _customer_id: string): Promise<Route> {
     if (origin === destination) {
         throw {
             error_code: 'INVALID_DATA',
@@ -15,7 +36,7 @@ async function calculateRouteAndListDrivers(origin: string, destination: string,
         }
     }
 
-    const url = 'https://routes.googleapis.com/directions/v2:computeRoutes'
+    const urlRoutes = 'https://routes.googleapis.com/directions/v2:computeRoutes'
     const apiKey = process.env.GOOGLE_API_KEY
 
     const payload = {
@@ -33,7 +54,7 @@ async function calculateRouteAndListDrivers(origin: string, destination: string,
         units: 'UNITS_UNSPECIFIED',
     }
 
-    const response = await axios.post(url, payload, {
+    const response = await axios.post(urlRoutes, payload, {
         headers: {
             'Content-Type': 'application/json',
             'X-Goog-Api-Key': apiKey,
@@ -48,8 +69,20 @@ async function calculateRouteAndListDrivers(origin: string, destination: string,
     const destinationLocation = leg.endLocation.latLng
     const routeDistance = leg.distanceMeters / 1000
 
+    const drivers = await prisma.driver.findMany({
+        orderBy: {
+            ratePerKm: 'asc',
+        },
+    })
+
     const availableDrivers = drivers.filter(driver => driver.minDistance <= routeDistance)
     availableDrivers.sort((a, b) => a.ratePerKm - b.ratePerKm)
+
+    const originData = `${originLocation.latitude},${originLocation.longitude}`
+    const destinationData = `${destinationLocation.latitude},${destinationLocation.longitude}`
+    const markers = `markers=color:red%7Clabel:A%7C${originData}&markers=color:red%7Clabel:B%7C${destinationData}`
+    const encodedPolyline = encodeURIComponent(route.polyline.encodedPolyline)
+    const mapStatic = `https://maps.googleapis.com/maps/api/staticmap?size=400x400&${markers}&path=weight:3%7Ccolor:blue%7Cenc:${encodedPolyline}&key=${apiKey}`
 
     return {
         origin: {
@@ -73,7 +106,7 @@ async function calculateRouteAndListDrivers(origin: string, destination: string,
             },
             value: driver.ratePerKm * (leg.distanceMeters / 1000),
         })),
-        routeResponse: response.data,
+        routeResponse: { response: response.data, mapStatic, drivers },
     }
 }
 
@@ -93,7 +126,11 @@ async function confirmTripAndSaveToHistory(
         }
     }
 
-    const driverResult = drivers.find(d => d.id === driver.id)
+    const driverResult = await prisma.driver.findUnique({
+        where: {
+            id: driver.id,
+        },
+    })
 
     if (!driverResult || driverResult?.name !== driver.name) {
         throw {
@@ -126,7 +163,11 @@ async function confirmTripAndSaveToHistory(
 
 async function listUserTrips(customer_id: string, driver_id: string): Promise<object> {
     if (driver_id) {
-        const driverResult = drivers.find(driver => driver.id === Number(driver_id))
+        const driverResult = await prisma.driver.findUnique({
+            where: {
+                id: Number(driver_id),
+            },
+        })
 
         if (!driverResult) {
             throw {
@@ -140,6 +181,14 @@ async function listUserTrips(customer_id: string, driver_id: string): Promise<ob
 
     const rides = await prisma.ride.findMany({
         where: whereCondition,
+        include: {
+            driver: {
+                select: {
+                    id: true,
+                    name: true,
+                },
+            },
+        },
         orderBy: {
             createdAt: 'desc',
         },
@@ -152,10 +201,9 @@ async function listUserTrips(customer_id: string, driver_id: string): Promise<ob
         }
     }
 
-    const ridesWithDriver = rides.map(ride => {
-        const driver = drivers.find(d => d.id === ride.driver_id)
-
-        return {
+    return {
+        customer_id,
+        rides: rides.map(ride => ({
             id: ride.id,
             date: ride.createdAt,
             origin: ride.origin,
@@ -163,16 +211,11 @@ async function listUserTrips(customer_id: string, driver_id: string): Promise<ob
             distance: ride.distance,
             duration: ride.duration,
             driver: {
-                id: driver?.id,
-                name: driver?.name,
+                id: ride.driver.id,
+                name: ride.driver.name,
             },
             value: ride.value,
-        }
-    })
-
-    return {
-        customer_id,
-        rides: ridesWithDriver,
+        })),
     }
 }
 

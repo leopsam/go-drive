@@ -1,8 +1,10 @@
 import postRideEstimate from '../../services/postRideEstimateApi'
-import { Container, Info, Form, InputItem, ButtonForm, TitleContainer, ButtonHistory } from './styles'
+import { Container, Info } from './styles'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
+import TripRequestForm from '../../components/TripRequestForm/index'
+import Title from '../../components/TitleContainer/index'
+import ButtonHistory from '../../components/ButtonHistory/index'
 
 export default function Page() {
     const [customerId, setCustomerId] = useState('')
@@ -30,7 +32,7 @@ export default function Page() {
     return (
         <Container>
             <Info>
-                <TitleContainer>Bem vindo 🚗</TitleContainer>
+                <Title>Bem vindo 🚗</Title>
                 <p>
                     No projeto Go Drive, você poderá solicitar uma viagem em um carro particular de um ponto A até um ponto B. Ao fazer uma solicitação, será
                     necessário informar o ID do usuário, o endereço de origem e o endereço de destino para que possamos encontrar a melhor opção para você.
@@ -45,23 +47,16 @@ export default function Page() {
                 </p>
                 <ButtonHistory onClick={() => navigate('/history')}>HISTÓRICO DE VIAGENS</ButtonHistory>
             </Info>
-            <Form onSubmit={submitTripRequest}>
-                <TitleContainer>Go Drive</TitleContainer>
-                <InputItem>
-                    <label htmlFor="customerId">Usuário:</label>
-                    <input id="customerId" value={customerId} onChange={e => setCustomerId(e.target.value)} placeholder="Informe o ID do usuário" />
-                </InputItem>
-                <InputItem>
-                    <label htmlFor="origin">Origem:</label>
-                    <input id="origin" value={origin} onChange={e => setOrigin(e.target.value)} placeholder="Informe o endereço de origem" />
-                </InputItem>
-                <InputItem>
-                    <label htmlFor="destination">Destino:</label>
-                    <input id="destination" value={destination} onChange={e => setDestination(e.target.value)} placeholder="Informe o endereço de destino" />
-                </InputItem>
-                <ButtonForm type="submit">{textButton}</ButtonForm>
-                <ToastContainer position="bottom-center" autoClose={3000} hideProgressBar={false} newestOnTop={false} />
-            </Form>
+            <TripRequestForm
+                customerId={customerId}
+                origin={origin}
+                destination={destination}
+                textButton={textButton}
+                setCustomerId={setCustomerId}
+                setOrigin={setOrigin}
+                setDestination={setDestination}
+                submitTripRequest={submitTripRequest}
+            />
         </Container>
     )
 }
