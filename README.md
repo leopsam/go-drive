@@ -17,9 +17,9 @@ GoDrive é um projeto fullstack dockerizado que permite ao usuário solicitar um
 ## Tecnologias Utilizadas
 
 - **Frontend:**
-  - React
+  - NextJs
   - TypeScript
-  - Styled-Components
+  - CSS Modules
   - React-Toastify
   - Axios
 
@@ -32,7 +32,6 @@ GoDrive é um projeto fullstack dockerizado que permite ao usuário solicitar um
 
 - **Infraestrutura:**
   - Docker
-  - Nginx (para servir o SPA)
 
 ## Rodando o Projeto
 
