@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  padding: 0 30px;
+  color: white;
+  gap: 50px;
+}
+
+.containerDrivers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 40vw;
+  min-height: 100vh;
+  height: 100%;
+  background-color: #00000086;
+  padding: 0 30px;
+  max-height: 100%;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 400px;
+  overflow: hidden;
+  color: white;
+}
+
+.info p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+@media (max-width: 980px) {
+  .container {
+    flex-direction: column-reverse;
+    height: auto;
+    width: 100%;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .containerDrivers {
+    width: 75vw;
+    padding: 15px;
+    height: 100%;
+  }
+
+  .info {
+    align-items: center;
+    width: 100%;
+  }
+}

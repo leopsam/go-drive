@@ -1,0 +1,22 @@
+.smallDynamicSize {
+  display: none;
+}
+
+.smallDynamicSize img {
+  height: 200px;
+  width: 200px;
+}
+
+.largeDynamicSize {
+  display: inline;
+}
+
+@media (max-width: 980px) {
+  .largeDynamicSize {
+    display: none;
+  }
+
+  .smallDynamicSize {
+    display: inline;
+  }
+}

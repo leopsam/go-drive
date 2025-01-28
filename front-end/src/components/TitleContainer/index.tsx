@@ -1,5 +1,5 @@
-import { TitleContainer } from './styles'
+import styles from './styles.module.css'
 
 export default function Title({ children }: { children: string }) {
-    return <TitleContainer>{children}</TitleContainer>
+  return <div className={styles.titleContainer}>{children}</div>
 }

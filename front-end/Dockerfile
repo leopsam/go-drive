@@ -1,15 +1,22 @@
-FROM node
+# Builder
+FROM node:18-alpine AS builder
 
-WORKDIR /tmp/react
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm i
 
 COPY . .
 
-RUN npm i
 RUN npm run build
+RUN npm prune --production
 
-RUN mkdir -p /var/www/html
-RUN mv build/* /var/www/html
+# start
+FROM node:18-alpine
 
-WORKDIR /
+WORKDIR /app
+COPY --from=builder /app ./
 
-RUN rm -rf /tmp/react
+EXPOSE 80
+
+CMD ["npm", "start"]

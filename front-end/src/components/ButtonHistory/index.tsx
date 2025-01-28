@@ -1,5 +1,15 @@
-import { StyledButton } from './styles'
+'use client'
 
-export default function ButtonHistory({ onClick, children }: { onClick: () => void; children: string }) {
-    return <StyledButton onClick={onClick}>{children}</StyledButton>
+import { useRouter } from 'next/navigation'
+import styles from './styles.module.css'
+
+function ButtonHistory() {
+  const router = useRouter()
+  return (
+    <button className={styles.styledButton} onClick={() => router.push('/history')}>
+      HISTÓRICO DE VIAGENS
+    </button>
+  )
 }
+
+export default ButtonHistory

@@ -29,37 +29,12 @@ services:
   spa:
     container_name: spa
     build: ./front-end
-    volumes:
-      - react-build:/var/www/html
-    environment:
-      REACT_APP_API_URL: http://api:8080/ride/
-    depends_on:
-      - api
-
-  nginx:
-    container_name: nginx
-    build: ./nginx
     ports:
       - 80:80
-    volumes:
-      - react-build:/var/www/html
-    depends_on:
-      - postgres
-      - api
-      - spa
-
-  test:
-    container_name: test
-    build: ./back-end
-    command: npx jest
     environment:
-      DATABASE_URL: "postgres://postgres:postgres@postgres:5432/go_drive"
+      NEXT_PUBLIC_API_URL: http://api:8080/ride/
     depends_on:
-      - postgres
-    volumes:
-      - .:/src/usr/
-
+      - api
 
 volumes:
   postgres-data:
-  react-build:

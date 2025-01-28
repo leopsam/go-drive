@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  padding: 30px;
+  color: white;
+  gap: 50px;
+}
+.msg {
+  font-size: 18px;
+  text-align: center;
+  width: 70vw;
+}

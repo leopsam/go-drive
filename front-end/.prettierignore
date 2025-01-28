@@ -1,0 +1,14 @@
+# Ignorar a pasta .next
+.next
+
+# Ignorar arquivos de build
+build
+
+# Ignorar arquivos específicos
+node_modules
+coverage
+dist
+
+# Outros padrões
+*.log
+*.lock

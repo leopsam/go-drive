@@ -1,0 +1,25 @@
+.styledButton {
+  background-color: #26ac84;
+  margin: 17px 0;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-size: 16px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.styledButton:hover {
+  background-color: #007552;
+}
+
+.styledButton:active {
+  background-color: #5c947d;
+}
+
+@media (max-width: 980px) {
+  .styledButton {
+    font-size: 11px;
+  }
+}
